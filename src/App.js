@@ -16,8 +16,8 @@ import {
 } from "@mui/material";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import "react-toastify/dist/ReactToastify.css";
-const url=process.env.URL
-const socket = io("http://192.168.0.111:4001");
+const url=process.env.REACT_APP_URL
+const socket = io(url);
 
 const App = () => {
   const [file, setFile] = useState(null);
@@ -83,7 +83,7 @@ const App = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.0.111:4001/send-messages",
+        `${url}/send-messages`,
         formData,
         {
           headers: {
@@ -103,7 +103,7 @@ const App = () => {
     setIsDeviceLinked(true);
     setQrCode(null);
     try {
-      const response = await axios.get("http://192.168.0.111:4001/link-device");
+      const response = await axios.get(`${url}/link-device`);
       toast.info(response.data.message);
     } catch (error) {
       toast.error(error.response?.data?.error || "Failed to link device.");
